@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=7.1",
-    "spryker/api": "^0.1"
+    "spryker/api": "^0.1|^0.2"
   },
   "require-dev": {
     "spryker/code-sniffer": "^0.11",
