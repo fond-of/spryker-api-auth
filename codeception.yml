@@ -1,4 +1,4 @@
-namespace: fond-of-spryker/customer-group-customer-connector
+namespace: fond-of-spryker/api-auth
 
 suites:
   unit:

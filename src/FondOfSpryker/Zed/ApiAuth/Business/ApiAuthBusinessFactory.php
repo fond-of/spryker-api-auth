@@ -9,7 +9,7 @@ use FondOfSpryker\Zed\ApiAuth\Business\Model\TokenInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
- * @method \FondOfSpryker\Zed\ApiAuth\AuthConfig getConfig()
+ * @method \FondOfSpryker\Zed\ApiAuth\ApiAuthConfig getConfig()
  */
 class ApiAuthBusinessFactory extends AbstractBusinessFactory
 {
