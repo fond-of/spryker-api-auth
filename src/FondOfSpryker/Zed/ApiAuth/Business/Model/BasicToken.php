@@ -22,7 +22,7 @@ class BasicToken implements TokenInterface
      *
      * @return void
      */
-    public function setRawToken(string $rawToken)
+    public function setRawToken(string $rawToken): void
     {
         $this->rawToken = $rawToken;
     }

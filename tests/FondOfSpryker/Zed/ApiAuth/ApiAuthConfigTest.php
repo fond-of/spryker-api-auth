@@ -3,36 +3,23 @@
 namespace FondOfSpryker\Zed\ApiAuth;
 
 use Codeception\Test\Unit;
-use org\bovigo\vfs\vfsStream;
-use Spryker\Shared\Config\Config;
+use FondOfSpryker\Shared\ApiAuth\ApiAuthConstants;
 
 class ApiAuthConfigTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\ApiAuth\ApiAuthConfig
+     * @var \FondOfSpryker\Zed\ApiAuth\ApiAuthConfig|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $apiAuthConfig;
-
-    /**
-     * @var \org\bovigo\vfs\vfsStreamDirectory
-     */
-    protected $vfsStreamDirectory;
 
     /**
      * @return void
      */
     protected function _before()
     {
-        $this->vfsStreamDirectory = vfsStream::setup('root', null, [
-            'config' => [
-                'Shared' => [
-                    'stores.php' => file_get_contents(codecept_data_dir('stores.php')),
-                    'config_default.php' => file_get_contents(codecept_data_dir('empty_config_default.php')),
-                ],
-            ],
-        ]);
-
-        $this->apiAuthConfig = new ApiAuthConfig();
+        $this->apiAuthConfig = $this->getMockBuilder(ApiAuthConfig::class)
+            ->setMethods(['get'])
+            ->getMock();
     }
 
     /**
@@ -40,9 +27,14 @@ class ApiAuthConfigTest extends Unit
      */
     public function testGetDefaultRawToken()
     {
-        Config::getInstance()->init();
+        $rawToken = '';
 
-        $this->assertEquals('', $this->apiAuthConfig->getRawToken());
+        $this->apiAuthConfig->expects($this->atLeastOnce())
+            ->method('get')
+            ->with(ApiAuthConstants::RAW_TOKEN, '')
+            ->willReturn($rawToken);
+
+        $this->assertEquals($rawToken, $this->apiAuthConfig->getRawToken());
     }
 
     /**
@@ -50,12 +42,13 @@ class ApiAuthConfigTest extends Unit
      */
     public function testGetCustomRawToken()
     {
-        $fileUrl = vfsStream::url('root/config/Shared/config_default.php');
-        $newFileContent = file_get_contents(codecept_data_dir('config_default.php'));
-        file_put_contents($fileUrl, $newFileContent);
+        $rawToken = 'cmF3X3Rva2VuOnJhd190b2tlbg==';
 
-        Config::getInstance()->init();
+        $this->apiAuthConfig->expects($this->atLeastOnce())
+            ->method('get')
+            ->with(ApiAuthConstants::RAW_TOKEN, '')
+            ->willReturn($rawToken);
 
-        $this->assertEquals('cmF3X3Rva2VuOnJhd190b2tlbg==', $this->apiAuthConfig->getRawToken());
+        $this->assertEquals($rawToken, $this->apiAuthConfig->getRawToken());
     }
 }

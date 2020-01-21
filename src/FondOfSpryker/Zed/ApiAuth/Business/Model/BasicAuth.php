@@ -4,8 +4,8 @@ namespace FondOfSpryker\Zed\ApiAuth\Business\Model;
 
 class BasicAuth implements AuthInterface
 {
-    const AUTH_TYPE = 'Basic';
-    
+    protected const AUTH_TYPE = 'Basic';
+
     /**
      * @var \FondOfSpryker\Zed\ApiAuth\Business\Model\TokenInterface
      */
@@ -39,12 +39,12 @@ class BasicAuth implements AuthInterface
      */
     protected function extractToken(string $authorizationHeader): string
     {
-        $position = \strpos($authorizationHeader, static::AUTH_TYPE);
+        $position = strpos($authorizationHeader, static::AUTH_TYPE);
 
         if ($position === false) {
             return $authorizationHeader;
         }
 
-        return \substr($authorizationHeader, $position + \strlen(static::AUTH_TYPE) + 1);
+        return substr($authorizationHeader, $position + strlen(static::AUTH_TYPE) + 1);
     }
 }
