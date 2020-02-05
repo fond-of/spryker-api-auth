@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ApiAuth\Communication\Plugin\Bootstrap;
 
+use Closure;
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\ApiAuth\Business\ApiAuthFacadeInterface;
 use Silex\Application;
@@ -54,7 +55,7 @@ class ApiAuthBootstrapProviderTest extends Unit
 
         $this->applicationMock->expects($this->atLeastOnce())
             ->method('before')
-            ->with($this->isInstanceOf(\Closure::class), Application::EARLY_EVENT);
+            ->with($this->isInstanceOf(Closure::class), Application::EARLY_EVENT);
 
         $this->apiAuthBoostrapProvider->boot($this->applicationMock);
     }

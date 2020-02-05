@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \FondOfSpryker\Zed\ApiAuth\Business\ApiAuthFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\ApiAuth\ApiAuthConfig getConfig()
  */
 class ApiAuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -31,7 +32,7 @@ class ApiAuthBootstrapProvider extends AbstractPlugin implements ServiceProvider
     {
         $apiAuthFacade = $this->getFacade();
 
-        $app->before(function (Request $request) use ($app, $apiAuthFacade) {
+        $app->before(function (Request $request) use ($apiAuthFacade) {
             $authorizationHeader = $request->headers->get('AUTHORIZATION');
 
             if (!$authorizationHeader || !$apiAuthFacade->isAuthenticated($authorizationHeader)) {
