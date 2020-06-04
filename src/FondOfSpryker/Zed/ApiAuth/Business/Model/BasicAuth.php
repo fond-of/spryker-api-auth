@@ -14,9 +14,8 @@ class BasicAuth implements AuthInterface
     /**
      * @param \FondOfSpryker\Zed\ApiAuth\Business\Model\TokenInterface $token
      */
-    public function __construct(
-        TokenInterface $token
-    ) {
+    public function __construct(TokenInterface $token)
+    {
         $this->token = $token;
     }
 
