@@ -4,7 +4,7 @@ namespace FondOfSpryker\Zed\ApiAuth\Communication\Plugin\Bootstrap;
 
 use Closure;
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\ApiAuth\Business\ApiAuthFacadeInterface;
+use FondOfSpryker\Zed\ApiAuth\Business\ApiAuthFacade;
 use Silex\Application;
 
 class ApiAuthBootstrapProviderTest extends Unit
@@ -35,7 +35,7 @@ class ApiAuthBootstrapProviderTest extends Unit
             ->setMethods(['getFacade'])
             ->getMock();
 
-        $this->apiAuthFacadeMock = $this->getMockBuilder(ApiAuthFacadeInterface::class)
+        $this->apiAuthFacadeMock = $this->getMockBuilder(ApiAuthFacade::class)
             ->disableOriginalConstructor()
             ->getMock();
 

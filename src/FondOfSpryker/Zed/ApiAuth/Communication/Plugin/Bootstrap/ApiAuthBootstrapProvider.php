@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ApiAuth\Communication\Plugin\Bootstrap;
 
+use FondOfSpryker\Shared\ApiAuth\ApiAuthConstants;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -33,11 +34,13 @@ class ApiAuthBootstrapProvider extends AbstractPlugin implements ServiceProvider
         $apiAuthFacade = $this->getFacade();
 
         $app->before(function (Request $request) use ($apiAuthFacade) {
-            $authorizationHeader = $request->headers->get('AUTHORIZATION');
+            $authorizationHeader = $request->headers->get(ApiAuthConstants::HEADER_AUTHORIZATION);
 
             if (!$authorizationHeader || !$apiAuthFacade->isAuthenticated($authorizationHeader)) {
                 return new Response('', 403);
             }
+
+            return null;
         }, Application::EARLY_EVENT);
     }
 }
