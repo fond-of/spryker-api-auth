@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\ApiAuth\Communication\Plugin\Bootstrap;
 
+use FondOfSpryker\Shared\ApiAuth\ApiAuthConstants;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \FondOfSpryker\Zed\ApiAuth\Business\ApiAuthFacadeInterface getFacade()
+ * @method \FondOfSpryker\Zed\ApiAuth\ApiAuthConfig getConfig()
  */
 class ApiAuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -31,12 +33,14 @@ class ApiAuthBootstrapProvider extends AbstractPlugin implements ServiceProvider
     {
         $apiAuthFacade = $this->getFacade();
 
-        $app->before(function (Request $request) use ($app, $apiAuthFacade) {
-            $authorizationHeader = $request->headers->get('AUTHORIZATION');
+        $app->before(function (Request $request) use ($apiAuthFacade) {
+            $authorizationHeader = $request->headers->get(ApiAuthConstants::HEADER_AUTHORIZATION);
 
             if (!$authorizationHeader || !$apiAuthFacade->isAuthenticated($authorizationHeader)) {
                 return new Response('', 403);
             }
+
+            return null;
         }, Application::EARLY_EVENT);
     }
 }
